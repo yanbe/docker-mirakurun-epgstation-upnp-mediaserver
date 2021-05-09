@@ -1,0 +1,3 @@
+[submodule "mirakurun"]
+	path = mirakurun
+	url = https://github.com/yanbe/Mirakurun.git

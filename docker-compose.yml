@@ -1,0 +1,65 @@
+mirakurun:
+  build: mirakurun
+  cap_add:
+    - SYS_ADMIN
+    - SYS_NICE
+    - SYS_RAWIO
+  environment:
+    TZ: Asia/Tokyo
+    # LOG_LEVEL: "3"
+    # DEBUG: "true"
+  ports:
+    - 40772:40772
+    - 9229:9229
+  devices:
+    - /dev/asv52200:/dev/asv52200
+    - /dev/asv52201:/dev/asv52201
+    - /dev/asv52202:/dev/asv52202
+    - /dev/asv52203:/dev/asv52203
+    - /dev/bus/usb:/dev/bus/usb # card reader
+  volumes:
+    - /usr/local/mirakurun/run/:/var/run/
+    - /usr/local/mirakurun/opt/:/opt/
+    - /usr/local/mirakurun/config/:/app-config/
+    - /usr/local/mirakurun/data/:/app-data/
+  restart: always
+  log_driver: json-file
+  log_opt:
+    max-file: "1"
+    max-size: 10m
+
+mysql:
+  image: mariadb:10.0
+  volumes:
+    - /usr/local/mysql/var/lib/mysql:/var/lib/mysql
+  environment:
+    MYSQL_USER: epgstation
+    MYSQL_PASSWORD: epgstation
+    MYSQL_ROOT_PASSWORD: epgstation
+    MYSQL_DATABASE: epgstation
+    TZ: "Asia/Tokyo"
+  command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --performance-schema=false --expire_logs_days=1
+  restart: always
+  log_opt:
+    max-size: "10m"
+    max-file: "3"
+
+epgstation:
+  build: epgstation
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./epgstation/config:/app/config
+    - ./epgstation/data:/app/data
+    - ./epgstation/thumbnail:/app/thumbnail
+    - ./epgstation/logs:/app/logs
+    - /var/lib/epgstation/recorded:/app/recorded
+  environment:
+    TZ: "Asia/Tokyo"
+  links:
+    - mirakurun
+    - mysql
+  ports:
+    - "8888:8888"
+    - "8889:8889"
+  #user: "1000:1000"
+  restart: always
