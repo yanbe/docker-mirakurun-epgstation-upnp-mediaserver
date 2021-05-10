@@ -1,3 +1,6 @@
 [submodule "mirakurun"]
 	path = mirakurun
 	url = https://github.com/yanbe/Mirakurun.git
+[submodule "epgstation"]
+	path = epgstation
+	url = https://github.com/yanbe/EPGStation.git
