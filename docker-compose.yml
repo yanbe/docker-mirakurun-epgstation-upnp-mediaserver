@@ -46,6 +46,10 @@ mysql:
 
 epgstation:
   build: epgstation
+  devices:
+    - /dev/nvidia-uvm:/dev/nvidia-uvm
+    - /dev/nvidia0:/dev/nvidia0
+    - /dev/nvidiactl:/dev/nvidiactl
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./epgstation/config:/app/config
@@ -53,6 +57,7 @@ epgstation:
     - ./epgstation/thumbnail:/app/thumbnail
     - ./epgstation/logs:/app/logs
     - /var/lib/epgstation/recorded:/app/recorded
+    - /usr/lib64/nvidia:/usr/local/nvidia/lib64
   environment:
     TZ: "Asia/Tokyo"
   links:
