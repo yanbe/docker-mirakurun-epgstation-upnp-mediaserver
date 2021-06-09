@@ -57,6 +57,7 @@ epgstation:
     - ./epgstation/thumbnail:/app/thumbnail
     - ./epgstation/logs:/app/logs
     - /var/lib/epgstation/recorded:/app/recorded
+    - /var/lib/epgstation/thumbnail:/app/thumbnail
     - /usr/lib64/nvidia:/usr/local/nvidia/lib64
   environment:
     TZ: "Asia/Tokyo"
