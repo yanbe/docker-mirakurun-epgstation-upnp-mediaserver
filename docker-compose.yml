@@ -18,10 +18,8 @@ mirakurun:
     - /dev/asv52203:/dev/asv52203
     - /dev/bus/usb:/dev/bus/usb # card reader
   volumes:
-    - /usr/local/mirakurun/run/:/var/run/
-    - /usr/local/mirakurun/opt/:/opt/
-    - /usr/local/mirakurun/config/:/app-config/
-    - /usr/local/mirakurun/data/:/app-data/
+    - ./mirakurun/conf:/app-config
+    - ./mirakurun/data:/app-data
   restart: always
   log_driver: json-file
   log_opt:
@@ -31,7 +29,7 @@ mirakurun:
 mysql:
   image: mariadb:10.0
   volumes:
-    - /usr/local/mysql/var/lib/mysql:/var/lib/mysql
+    - /var/lib/epgstation/mysql:/var/lib/mysql
   environment:
     MYSQL_USER: epgstation
     MYSQL_PASSWORD: epgstation
@@ -51,14 +49,12 @@ epgstation:
     - /dev/nvidia0:/dev/nvidia0
     - /dev/nvidiactl:/dev/nvidiactl
   volumes:
-    - /etc/localtime:/etc/localtime:ro
+    - /usr/lib64/nvidia:/usr/local/nvidia/lib64:ro
     - ./epgstation/config:/app/config
-    - ./epgstation/data:/app/data
-    - ./epgstation/thumbnail:/app/thumbnail
+    - /var/lib/epgstation/data:/app/data
+    - /var/lib/epgstation/thumbnail:/app/thumbnail
     - ./epgstation/logs:/app/logs
     - /var/lib/epgstation/recorded:/app/recorded
-    - /var/lib/epgstation/thumbnail:/app/thumbnail
-    - /usr/lib64/nvidia:/usr/local/nvidia/lib64
   environment:
     TZ: "Asia/Tokyo"
   links:
