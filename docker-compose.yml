@@ -18,8 +18,10 @@ mirakurun:
     - /dev/asv52203:/dev/asv52203
     - /dev/bus/usb:/dev/bus/usb # card reader
   volumes:
-    - ./mirakurun/conf:/app-config
-    - ./mirakurun/data:/app-data
+    - /var/lib/mirakurun/run:/var/run
+    - /var/lib/mirakurun/opt:/opt
+    - /var/lib/mirakurun/config:/app-config
+    - /var/lib/mirakurun/data:/app-data
   restart: always
   log_driver: json-file
   log_opt:
@@ -53,7 +55,7 @@ epgstation:
     - ./epgstation/config:/app/config
     - /var/lib/epgstation/data:/app/data
     - /var/lib/epgstation/thumbnail:/app/thumbnail
-    - ./epgstation/logs:/app/logs
+    - /var/lib/epgstation/logs:/app/logs
     - /var/lib/epgstation/recorded:/app/recorded
   environment:
     TZ: "Asia/Tokyo"
