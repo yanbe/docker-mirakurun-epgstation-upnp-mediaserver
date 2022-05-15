@@ -4,3 +4,6 @@
 [submodule "epgstation"]
 	path = epgstation
 	url = https://github.com/yanbe/EPGStation.git
+[submodule "mediaserver"]
+	path = mediaserver
+	url = https://github.com/yanbe/upnp-mediaserver-epgstation.git

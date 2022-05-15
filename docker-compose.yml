@@ -67,3 +67,19 @@ epgstation:
     - "8889:8889"
   #user: "1000:1000"
   restart: always
+  log_opt:
+    max-size: "10m"
+    max-file: "3"
+
+mediaserver:
+  build: mediaserver
+  volumes:
+    - ./mediaserver:/go/src/app
+  environment:
+    TZ: Asia/Tokyo
+    EPGSTATION: 192.168.10.10:8888
+  net: host
+  restart: always
+  log_opt:
+    max-size: "10m"
+    max-file: "3"
