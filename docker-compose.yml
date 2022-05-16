@@ -83,3 +83,5 @@ mediaserver:
   log_opt:
     max-size: "10m"
     max-file: "3"
+  links:
+    - epgstation
